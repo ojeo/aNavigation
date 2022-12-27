@@ -115,16 +115,16 @@ $(function() {
                 link: 'https://www.zhihu.com/',
                 box_shadow: '#0078D8',
                 icon: 'img/zhihulogo.png',
-            }, {
-                name: '虎扑',
-                link: 'https://www.hupu.com/',
-                box_shadow: '#c01d2f',
-                icon: 'img/hupu.png',
-            }, {
-                name: 'CSDN',
-                link: 'https://www.csdn.net/',
-                box_shadow: '#c5000a',
-                icon: 'img/csdn.png',
+            // }, {
+            //     name: '虎扑',
+            //     link: 'https://www.hupu.com/',
+            //     box_shadow: '#c01d2f',
+            //     icon: 'img/hupu.png',
+            // }, {
+            //     name: 'CSDN',
+            //     link: 'https://www.csdn.net/',
+            //     box_shadow: '#c5000a',
+            //     icon: 'img/csdn.png',
             }, {
                 name: '少数派',
                 link: 'https://sspai.com/',
@@ -140,16 +140,16 @@ $(function() {
                 link: 'https://www.dgtle.com/',
                 box_shadow: '#62677b',
                 icon: 'img/shuziweiba.png',
-            }, {
-                name: '疫情跟踪',
-                link: 'https://app.21jingji.com/html/2020yiqing/',
-                box_shadow: '#7C5DC7',
-                icon: 'img/ding.png',
-            }, {
-                name: '疫情辟谣',
-                link: 'https://vp.fact.qq.com/home',
-                box_shadow: '#00A0E9',
-                icon: 'img/true.png',
+            // }, {
+            //     name: '疫情跟踪',
+            //     link: 'https://app.21jingji.com/html/2020yiqing/',
+            //     box_shadow: '#7C5DC7',
+            //     icon: 'img/ding.png',
+            // }, {
+            //     name: '疫情辟谣',
+            //     link: 'https://vp.fact.qq.com/home',
+            //     box_shadow: '#00A0E9',
+            //     icon: 'img/true.png',
             }]
         }
         for (var i = 0; i < bookmark.data.length; i++) {
