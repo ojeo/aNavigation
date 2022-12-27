@@ -398,37 +398,37 @@ function select() {
 //导航、引擎选择器结束
 
 // 天气插件
-(function(a, h, g, f, e, d, c, b) {
-    b = function() {
-        d = h.createElement(g);
-        c = h.getElementsByTagName(g)[0];
-        d.src = e;
-        d.charset = "utf-8";
-        d.async = 1;
-        c.parentNode.insertBefore(d, c)
-    };
-    a["SeniverseWeatherWidgetObject"] = f;
-    a[f] || (a[f] = function() {
-        (a[f].q = a[f].q || []).push(arguments)
-    });
-    a[f].l = +new Date();
-    if (a.attachEvent) {
-        a.attachEvent("onload", b)
-    } else {
-        a.addEventListener("load", b, false)
-    }
-}(window, document, "script", "SeniverseWeatherWidget", "//cdn.sencdn.com/widget2/static/js/bundle.js?t=" + parseInt((new Date().getTime() / 100000000).toString(), 10)));
-window.SeniverseWeatherWidget('show', {
-    flavor: "bubble",
-    location: "WX4FBXXFKE4F",
-    geolocation: true,
-    language: "auto",
-    unit: "c",
-    theme: "auto",
-    token: "e14489a8-9a7e-477d-9c6c-b4b390175cca",
-    hover: "enabled",
-    container: "tp-weather-widget"
-})
+// (function(a, h, g, f, e, d, c, b) {
+//     b = function() {
+//         d = h.createElement(g);
+//         c = h.getElementsByTagName(g)[0];
+//         d.src = e;
+//         d.charset = "utf-8";
+//         d.async = 1;
+//         c.parentNode.insertBefore(d, c)
+//     };
+//     a["SeniverseWeatherWidgetObject"] = f;
+//     a[f] || (a[f] = function() {
+//         (a[f].q = a[f].q || []).push(arguments)
+//     });
+//     a[f].l = +new Date();
+//     if (a.attachEvent) {
+//         a.attachEvent("onload", b)
+//     } else {
+//         a.addEventListener("load", b, false)
+//     }
+// }(window, document, "script", "SeniverseWeatherWidget", "//cdn.sencdn.com/widget2/static/js/bundle.js?t=" + parseInt((new Date().getTime() / 100000000).toString(), 10)));
+// window.SeniverseWeatherWidget('show', {
+//     flavor: "bubble",
+//     location: "WX4FBXXFKE4F",
+//     geolocation: true,
+//     language: "auto",
+//     unit: "c",
+//     theme: "auto",
+//     token: "e14489a8-9a7e-477d-9c6c-b4b390175cca",
+//     hover: "enabled",
+//     container: "tp-weather-widget"
+// })
 
 // 搜索提示词
 class searchHint {
