@@ -76,20 +76,35 @@ function rgb2hex(rgb) {
 $(function() {
         var bookmark = {
             data: [{
-                name: '开发日志',
-                link: 'https://kksan.top/f5404b68deeb4634b39dac0bc67ec693',
-                box_shadow: '#F18033',
-                icon: 'img/log.png',
+                name: '网盘',
+                link: 'https://s.abbb.top:50/drive/',
+                box_shadow: '#62677b',
+                icon: 'img/drive.png',
             }, {
-                name: '酷安',
-                link: 'https://www.coolapk.com',
-                box_shadow: '#11B063',
-                icon: 'img/coolapk.png',
+                name: '照片',
+                link: 'https://s.abbb.top:50/moments/',
+                box_shadow: '#62677b',
+                icon: 'img/photos.png',
             }, {
-                name: 'Via插件',
-                link: 'http://via-app.cn',
-                box_shadow: '#FA7199',
-                icon: 'img/via.png',
+                name: '电影',
+                link: 'https://s.abbb.top:50/video/',
+                box_shadow: '#62677b',
+                icon: 'img/video.png',
+            }, {
+                name: '文件',
+                link: 'https://s.abbb.top:50/file/',
+                box_shadow: '#62677b',
+                icon: 'img/file.png',
+            }, {
+                name: '下载',
+                link: 'https://s.abbb.top:50/download/',
+                box_shadow: '#62677b',
+                icon: 'img/download.png',
+            }, {
+                name: 'DSM',
+                link: 'https://s.abbb.top:50/',
+                box_shadow: '#62677b',
+                icon: 'img/settings.png',
             }, {
                 name: '今日热榜',
                 link: 'https://tophub.today/',
@@ -101,40 +116,15 @@ $(function() {
                 box_shadow: '#0078D8',
                 icon: 'img/zhihulogo.png',
             }, {
-                name: '小米商城',
-                link: 'https://m.mi.com/',
-                box_shadow: '#F57923',
-                icon: 'img/mi.png',
-            }, {
-                name: 'unsplash',
-                link: 'https://unsplash.com/',
-                box_shadow: '#2C2C2C',
-                icon: 'img/unsplash.png',
-            }, {
-                name: '豆瓣',
-                link: 'https://m.douban.com/',
-                box_shadow: '#37bf4c',
-                icon: 'img/douban.png',
-            }, {
                 name: '虎扑',
                 link: 'https://www.hupu.com/',
                 box_shadow: '#c01d2f',
                 icon: 'img/hupu.png',
             }, {
-                name: '斗鱼',
-                link: 'https://www.douyu.com/',
-                box_shadow: '#fe7700',
-                icon: 'img/douyu.png',
-            }, {
                 name: 'CSDN',
                 link: 'https://www.csdn.net/',
                 box_shadow: '#c5000a',
                 icon: 'img/csdn.png',
-            }, {
-                name: 'XDA',
-                link: 'https://www.xda-developers.com/',
-                box_shadow: '#AC6E2F',
-                icon: 'img/xda.png',
             }, {
                 name: '少数派',
                 link: 'https://sspai.com/',
@@ -357,10 +347,10 @@ $(function() {
         // 夜间模式结束
 
     // 更新提示框
-    $('#closealert').click(function() {
-            var version = '4.1.2';
-            localStorage.closealert = [version];
-        })
+    // $('#closealert').click(function() {
+    //         var version = '4.1.2';
+    //         localStorage.closealert = [version];
+    //     })
         // 更新提示框结束
 
 })
