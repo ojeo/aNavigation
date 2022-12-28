@@ -77,7 +77,7 @@ function rgb2hex(rgb) {
 
 // 添加书签结束
 $.ajax({
-    url: "js/bookmark", success: function (bookmark) {
+    url: "js/bookmark.js", success: function (bookmark) {
         bookmark = JSON.parse(bookmark)
         for (var i = 0; i < bookmark.data.length; i++) {
             if (bookmark.data[i].name == 'Via插件') {
@@ -90,7 +90,7 @@ $.ajax({
     }
 });
 $.ajax({
-    url: "js/sidemenus", success: function (menus) {
+    url: "js/sidemenus.js", success: function (menus) {
         menus = JSON.parse(menus)
         var menus_html = "";
         for (var i = 0; i < menus.data.length; i++) {
