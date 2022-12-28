@@ -77,6 +77,16 @@
                     "name": "W3school",
                     "url": "https://www.w3school.com.cn/",
                     "desc": "Web技术教程"
+                },
+                {
+                    "name": "菜鸟教程",
+                    "url": "https://www.runoob.com/",
+                    "desc": "编程基础技术教程"
+                },
+                {
+                    "name": "C语言中文网",
+                    "url": "http://c.biancheng.net/",
+                    "desc": "程序设计专业网站"
                 }
             ]
         },
