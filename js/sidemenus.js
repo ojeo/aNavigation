@@ -67,6 +67,16 @@
                     "name": "OSCHINA",
                     "url": "https://www.oschina.net/",
                     "desc": "中文开源技术社区"
+                },
+                {
+                    "name": "IconFont",
+                    "url": "https://www.iconfont.cn/",
+                    "desc": "阿里巴巴图标库"
+                },
+                {
+                    "name": "W3school",
+                    "url": "https://www.w3school.com.cn/",
+                    "desc": "Web技术教程"
                 }
             ]
         },
