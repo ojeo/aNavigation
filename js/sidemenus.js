@@ -64,9 +64,9 @@
                     "desc": "创意工作者的社区"
                 },
                 {
-                    "name": "工具蛙",
-                    "url": "1111",
-                    "desc": "内容分发网络服务"
+                    "name": "OSCHINA",
+                    "url": "https://www.oschina.net/",
+                    "desc": "中文开源技术社区"
                 }
             ]
         },
