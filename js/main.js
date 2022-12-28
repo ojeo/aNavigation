@@ -90,7 +90,7 @@ function rgb2hex(rgb) {
 //     }
 // });
 $.ajax({
-    url: "js/sidemenus.js", success: function (menus) {
+    url: "https://raw.githubusercontent.com/ojeo/aNavigation/master/js/sidemenus.js?v="+new Date().getTime(), success: function (menus) {
         menus = JSON.parse(menus)
         var menus_html = "";
         for (var i = 0; i < menus.data.length; i++) {
