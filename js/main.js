@@ -9,7 +9,7 @@
  * 开源相关：
  * Github：https://github.com/Jackie1123/aNavigation
  * CSSFX：https://cssfx.netlify.com
- * jQuery：https://jquery.com
+ * jQuery：https://jquery. com
  * slideout：https://slideout.js.org
  * bootstrap：https://getbootstrap.com
  * font-awesome：https://fontawesome.com
@@ -107,7 +107,7 @@ $(function() {
                 icon: 'img/settings.png',
             }, {
                 name: '今日热榜',
-                link: 'https://tophub.today/',
+                link: 'https://rebang.today/',
                 box_shadow: '#F2584A',
                 icon: 'img/headline.png',
             }, {
