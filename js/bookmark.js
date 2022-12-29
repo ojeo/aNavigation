@@ -78,6 +78,12 @@
         "icon": "img/headline.png"
     },
     {
+        "name": "今日热榜",
+        "link": "https://tophub.today/",
+        "box_shadow": "#ed4c67",
+        "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsAQMAAABDsxw2AAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAZQTFRF/////0NRLGKaNwAAAm1JREFUeJzt2E1u2zAQBWAZXmTpI+gKvYGulBuIvRmBLHoNAr2AgCwiIIZVW5VEqnx6epSZLArOaoR8ccIZWvypqhIlSpQoUaJEif8qzkMQnca23ZoNRmNbH/cPG0RmNdZr7Kaxjb8aMacx/M9F7KoxXLmYwTHEDI4hZrCtMYNDjRnsQ8zgUAEzGkMVAQxV5DhDhQMMFQ4wNEcAQ/U9zlAbPPtYMsPYL429LJkl7Kqx3jNHWOcZ6NbCnMasZ6CpCzMaq5IZmCIzu6UzMEXOyyecM7L+nn0uw6HsTWNnhZ1uGrueZmY22X1W9BrrNPaqsR/77P3BqpnZLfZ7nNi77E1jP0fWpjG3xaqRNTvsprLXx0Odh13vtZXYGJc8rE9iL4V9JcvU07xsetvWacw+x6bXaKOxdo+ZFTNb7O/vD5mYe+T7L9UuyAkbp8iyokZqZmNTL7tsbEO9y8afzGUjy64J6kGYC+pBF3E/ArLBGPz8oKyTtithsD1SOmPbvHTmsjKrMZOVxeoJJp4+xCOPeIASmXhqcxqzGjMaA+r4ERteOhw+16N6HL+aQPWIGb7TOXq7gq+vvpjlvSASmVg3kam3UkZjljG2bYDMcdakMXoV5tdm+pXx66TI6PfUby9ERl8Oq3U6AyMbqdV2ZWY2C2tJU9NZM6VsXQgYW2UqP0XY0lbx3gPG1tOK9z5grKmIGcpY7xGzlLHeI+Y4a6ec7N8SWDPlZG/5yOspJxvaBEZ6f4DtH1KGMCe3UgmM9B4yRxnpPWRxU1esnR7ipq5Yo7F6eoib+gyLm7pi270PT5R8aShRokSJEiVKlPjO+AMAZPMpdxyNbAAAAABJRU5ErkJggg=="
+    },
+    {
         "name": "少数派",
         "link": "https://sspai.com/",
         "box_shadow": "#D7191A",
