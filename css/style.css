@@ -100,6 +100,7 @@ ul {
     animation-duration: 0.2s;
     -webkit-animation: fade-in 0.2s;
     width: 300px;
+    height: 121px;
 }
 
 
@@ -172,6 +173,7 @@ ul {
     -webkit-animation: fade-in 0.5s;
     position: relative;
     border-radius: 0px;
+    height: 42px;
 }
 
 .inputDiv input,

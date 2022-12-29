@@ -24,7 +24,24 @@ var bg = storage.bg;
 var closealert = storage.closealert;
 var li = $('.sidenav-btn');
 var blockquote = $('.blockquote');
-
+if (storage.bookmarks != undefined) {
+    init_bookmark(storage.bookmarks);
+}else{
+    $.ajax({
+        url: "https://raw.githubusercontent.com/ojeo/aNavigation/master/js/bookmark.js?v="+new Date().getTime(), success: function (data) {
+            init_bookmark(data);
+        }
+    });
+}
+if (storage.menus != undefined) {
+    init_menu(storage.menus);
+}else{
+    $.ajax({
+        url: "https://raw.githubusercontent.com/ojeo/aNavigation/master/js/sidemenus.js?v="+new Date().getTime(), success: function (data) {
+            init_menu(data);
+        }
+    });
+}
 if (storage.data != undefined) {
     data = data.split(',');
     // console.log('已存在localStorage的数据：' + data); //已存在localStorage的数据
@@ -73,57 +90,36 @@ function rgb2hex(rgb) {
 }
 
 // rgb to hex结束
-
-
-// 添加书签结束
-// $.ajax({
-//     url: "js/bookmark.js", success: function (bookmark) {
-//         bookmark = JSON.parse(bookmark)
-//         for (var i = 0; i < bookmark.data.length; i++) {
-//             if (bookmark.data[i].name == 'Via插件') {
-//                 var addList = '<li class="folder-item col-xs-3 col-sm-2 visible-xs visible-sm"><a target="_blank" href="' + bookmark.data[i].link + '"><div class="folder-item-box"><img class="folder-item-img" style="box-shadow:' + bookmark.data[i].box_shadow + ' 0 14px 12px -6px" src="' + bookmark.data[i].icon + '" /><p>' + bookmark.data[i].name + '</p></div></a></li>'
-//             } else {
-//                 var addList = '<li class="folder-item col-xs-3 col-sm-2"><a target="_blank" href="' + bookmark.data[i].link + '"><div class="folder-item-box"><img class="folder-item-img" style="box-shadow:' + bookmark.data[i].box_shadow + ' 0 14px 12px -8px" src="' + bookmark.data[i].icon + '" /><p>' + bookmark.data[i].name + '</p></div></a></li>'
-//             }
-//             $('#folder ul').append(addList);
-//         }
-//     }
-// });
-$.ajax({
-    url: "https://raw.githubusercontent.com/ojeo/aNavigation/master/js/sidemenus.js?v="+new Date().getTime(), success: function (menus) {
-        menus = JSON.parse(menus)
-        var menus_html = "";
-        for (var i = 0; i < menus.data.length; i++) {
-            var group_name = menus.data[i].name
-            var item_html = "";
-            for (var j = 0; j < menus.data[i].items.length; j++) {
-                item_html += '<a target="_blank" href="' + menus.data[i].items[j].url + '"><li class="sidenav-btn">' + menus.data[i].items[j].name + '<p>' + menus.data[i].items[j].desc + '</p></li></a>';
-            }
-            var menu_html = '<blockquote class="blockquote">▎ ' + menus.data[i].name + '</blockquote><ul>' + item_html + '</ul>';
-            menus_html += menu_html;
-        }
-        $('#menu').prepend(menus_html);
-    }
-});
 // 搜索相关
 $(function () {
     var search = {
         data: [{
-            name: 'baidu',
-            icon: 'img/baidu-xs.png',
-            searchlink: 'https://www.baidu.com/s',
-            searchname: 'wd',
-            color: '#3245df',
-            placeholder: '百度一下...'
-        }, {
             name: 'google',
+            displayname: 'Google',
             icon: 'img/google-xs.png',
             searchlink: 'https://www.google.com/search',
             searchname: 'q',
             color: '#4285f4',
             placeholder: '咕噜咕噜...'
         }, {
+            name: 'baidu',
+            displayname: '百度',
+            icon: 'img/baidu-xs.png',
+            searchlink: 'https://www.baidu.com/s',
+            searchname: 'wd',
+            color: '#3245df',
+            placeholder: '百度一下...'
+        }, {
+            name: 'duckduckgo',
+            displayname: 'DuckDuckGo',
+            icon: 'img/duckduckgo-xs.png',
+            searchlink: 'https://duckduckgo.com/',
+            searchname: 'q',
+            color: '#dc3730',
+            placeholder: '嘎嘎嘎...'
+        },  {
             name: 'bing',
+            displayname: 'Bing',
             icon: 'img/bing-xs.png',
             searchlink: 'https://cn.bing.com/search',
             searchname: 'q',
@@ -131,20 +127,15 @@ $(function () {
             placeholder: 'Bing搜索...'
         }, {
             name: 'yahoo',
+            displayname: 'Yahoo',
             icon: 'img/yahoo-xs.png',
             searchlink: 'https://search.yahoo.com/search',
             searchname: 'p',
             color: '#5f01d1',
             placeholder: 'Yahoo~'
         }, {
-            name: 'magi',
-            icon: 'img/magi-xs.png',
-            searchlink: 'https://magi.com/search',
-            searchname: 'q',
-            color: 'black',
-            placeholder: 'Mag[i]...'
-        }, {
             name: 'sougou',
+            displayname: '搜狗',
             icon: 'img/sougou-xs.png',
             searchlink: 'https://www.sogou.com/web',
             searchname: 'query',
@@ -152,6 +143,7 @@ $(function () {
             placeholder: '搜狗搜索...'
         }, {
             name: 'wechat',
+            displayname: '搜狗微信',
             icon: 'img/wechat-xs.png',
             searchlink: 'https://weixin.sogou.com/weixin',
             searchname: 'query',
@@ -159,6 +151,7 @@ $(function () {
             placeholder: '搜微信文章...'
         }, {
             name: 'quark',
+            displayname: '夸克',
             icon: 'img/quark-xs.png',
             searchlink: 'https://quark.sm.cn/s',
             searchname: 'q',
@@ -166,6 +159,7 @@ $(function () {
             placeholder: '夸克搜索...'
         }, {
             name: 'taobao',
+            displayname: '淘宝',
             icon: 'img/taobao-xs.png',
             searchlink: 'https://s.taobao.com/search',
             searchname: 'q',
@@ -173,6 +167,7 @@ $(function () {
             placeholder: '淘，我喜欢...'
         }, {
             name: 'jingdong',
+            displayname: '京东',
             icon: 'img/jingdong-xs.png',
             searchlink: 'https://search.jd.com/Search',
             searchname: 'keyword',
@@ -180,6 +175,7 @@ $(function () {
             placeholder: '多，快，好，省...'
         }, {
             name: 'bilibili',
+            displayname: '哔哩哔哩',
             icon: 'img/bilibili-xs.png',
             searchlink: 'https://search.bilibili.com/all',
             searchname: 'keyword',
@@ -187,6 +183,7 @@ $(function () {
             placeholder: 'b站是一个学习网站...'
         }, {
             name: 'github',
+            displayname: 'GitHub',
             icon: 'img/github-xs.png',
             searchlink: 'https://github.com/search',
             searchname: 'q',
@@ -194,6 +191,7 @@ $(function () {
             placeholder: '全球最大的开源社区...'
         }, {
             name: 'toutiao',
+            displayname: '今日头条',
             icon: 'img/toutiao-xs.png',
             searchlink: 'https://m.toutiao.com/search',
             searchname: 'keyword',
@@ -201,6 +199,7 @@ $(function () {
             placeholder: '搜今日头条...'
         }, {
             name: 'weibo',
+            displayname: '微博',
             icon: 'img/weibo-xs.png',
             searchlink: 'https://s.weibo.com/weibo',
             searchname: 'q',
@@ -208,6 +207,7 @@ $(function () {
             placeholder: '搜微博...'
         }, {
             name: 'zhihu',
+            displayname: '知乎',
             icon: 'img/zhihu-xs.png',
             searchlink: 'https://www.zhihu.com/search',
             searchname: 'q',
@@ -215,6 +215,7 @@ $(function () {
             placeholder: '我们都是有问题的人...'
         }, {
             name: 'kuaidi',
+            displayname: '快递100',
             icon: 'img/kuaidi-xs.png',
             searchlink: 'https://m.kuaidi100.com/result.jsp',
             searchname: 'nu',
@@ -223,7 +224,7 @@ $(function () {
         }]
     }
     for (var i = 0; i < search.data.length; i++) { //添加搜索按钮
-        var addList = '<li class="folder-item2 col-xs-3 col-sm-2"> <a href="#"> <div class="folder-item-box2"> <img id="' + search.data[i].name + '" class="folder-item-img2" src="' + search.data[i].icon + '" /> </div> </a> </li> '
+        var addList = '<li class="folder-item2 col-xs-3 col-sm-2"> <a href="#"> <div class="folder-item-box2"> <img id="' + search.data[i].name + '" class="folder-item-img2" src="' + search.data[i].icon + '" /></div><p style="font-weight: bold;font-size: 12px;color: #393838;text-align: center;">'+search.data[i].displayname+'</p> </a> </li> '
         $('.nav ul').append(addList);
     }
 
@@ -232,7 +233,8 @@ $(function () {
         var id = e.target.id;
         for (var i = 0; i < search.data.length; i++) {
             if (id == search.data[i].name) {
-                document.getElementById("state").innerHTML = "<a href='folder://'><img style='width:300px;' src='img/" + search.data[i].name + ".png'></a>";
+                // document.getElementById("state").innerHTML = "<a href='folder://'><img style='width:300px;' src='img/" + search.data[i].name + ".png'></a>";
+                $('#state a img').attr('src', 'img/' + search.data[i].name + '.png');
                 $('#submitButton').css('background-color', search.data[i].color); //按钮bg
                 $('#Select').css('color', search.data[i].color); //选择器
                 $('#nav').css('display', 'none');
@@ -255,7 +257,14 @@ $(function () {
         }
     })
     // 搜索相关结束
-
+    $('#import_bookmark').click(function () {
+        var data = prompt("输入书签","");
+        init_bookmark(data);
+    });
+    $('#import_menu').click(function () {
+        var data = prompt("输入菜单","");
+        init_menu(data);
+    });
     // 夜间模式
     $('#night').click(function () {
         li = $('.sidenav-btn');
@@ -315,7 +324,38 @@ function check() {
         return false;
     }
 }
-
+function init_bookmark(data){
+    if(data!=undefined) {
+        var bookmark = JSON.parse(data);
+        $('#folder ul').empty();
+        for (var i = 0; i < bookmark.length; i++) {
+            if (bookmark[i].mobile !=undefined) {
+                var addList = '<li class="folder-item col-xs-3 col-sm-2 visible-xs visible-sm"><a target="_blank" href="' + bookmark[i].link + '"><div class="folder-item-box"><img class="folder-item-img" style="box-shadow:' + bookmark[i].box_shadow + ' 0 14px 12px -6px" src="' + bookmark[i].icon + '" /><p>' + bookmark[i].name + '</p></div></a></li>'
+            } else {
+                var addList = '<li class="folder-item col-xs-3 col-sm-2"><a target="_blank" href="' + bookmark[i].link + '"><div class="folder-item-box"><img class="folder-item-img" style="box-shadow:' + bookmark[i].box_shadow + ' 0 14px 12px -8px" src="' + bookmark[i].icon + '" /><p>' + bookmark[i].name + '</p></div></a></li>'
+            }
+            $('#folder ul').append(addList);
+        }
+        storage.bookmarks = data;
+    }
+}
+function init_menu(data){
+    if(data!=undefined){
+        menus = JSON.parse(data)
+        var menus_html = "";
+        $('#menu .side-menu').remove();
+        for (var i = 0; i < menus.length; i++) {
+            var item_html = "";
+            for (var j = 0; j < menus[i].items.length; j++) {
+                item_html += '<a target="_blank" href="' + menus[i].items[j].url + '"><li class="sidenav-btn">' + menus[i].items[j].name + '<p>' + menus[i].items[j].desc + '</p></li></a>';
+            }
+            var menu_html = '<blockquote class="blockquote side-menu">▎ ' + menus[i].name + '</blockquote><ul class="side-menu" >' + item_html + '</ul>';
+            menus_html += menu_html;
+        }
+        $('#menu').prepend(menus_html);
+        storage.menus = data;
+    }
+}
 //检查搜索框是否为空结束
 
 //title问候语
@@ -337,7 +377,7 @@ if (time < 5) {
 
 //导航、引擎选择器
 function select() {
-    $('#folder').css('display') == 'block' ? ($('#folder').css('display', 'none'), $('#nav').css('display', 'block'), document.getElementById("Select").innerHTML = "<hr>搜索引擎 <img src='img/search-change.svg?v=2ae7ab8'>") : ($('#nav').css('display', 'none'), $('#folder').css('display', 'block'), document.getElementById("Select").innerHTML = "<hr>书签 <img src='img/search-change.svg?v=2ae7ab8'>");
+    $('#folder').css('display') == 'block' ? ($('#folder').css('display', 'none'), $('#nav').css('display', 'block'), document.getElementById("Select").innerHTML = "<hr>搜索引擎 <img src='img/search-change.svg'>") : ($('#nav').css('display', 'none'), $('#folder').css('display', 'block'), document.getElementById("Select").innerHTML = "<hr>书签 <img src='img/search-change.svg'>");
 }
 
 //导航、引擎选择器结束
