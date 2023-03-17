@@ -24,7 +24,7 @@
             },
             {
                 "name": "在线PS",
-                "url": "https://toolwa.com/ps/",
+                "url": "https://www.photopea.com/",
                 "desc": "在线图片处理"
             },
             {
