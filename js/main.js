@@ -28,7 +28,7 @@ if (storage.bookmarks != undefined) {
     init_bookmark(storage.bookmarks);
 }else{
     $.ajax({
-        url: "https://raw.githubusercontent.com/ojeo/aNavigation/master/js/bookmark.js?v="+new Date().getTime(), success: function (data) {
+        url: "js/bookmark.js?v="+new Date().getTime(), success: function (data) {
             init_bookmark(data);
         }
     });
@@ -37,7 +37,7 @@ if (storage.menus != undefined) {
     init_menu(storage.menus);
 }else{
     $.ajax({
-        url: "https://raw.githubusercontent.com/ojeo/aNavigation/master/js/sidemenus.js?v="+new Date().getTime(), success: function (data) {
+        url: "js/sidemenus.js?v="+new Date().getTime(), success: function (data) {
             init_menu(data);
         }
     });
