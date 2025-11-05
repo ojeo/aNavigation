@@ -123,9 +123,9 @@
                 "desc": "点到点直连"
             },
             {
-                "name": "奶牛快传",
-                "url": "https://cowtransfer.com/",
-                "desc": "安全、省时高效"
+                "name": "PairDrop",
+                "url": "https://pairdrop.net/",
+                "desc": "局域网文件传输"
             },
             {
                 "name": "文叔叔",
