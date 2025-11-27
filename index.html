@@ -15,6 +15,63 @@
     <script type="text/javascript" src="bootstrap/bootstrap.min.js"></script>
     <link rel="stylesheet" href="css/slideout.css">
     <link href="css/style.css" rel="stylesheet" type="text/css"/>
+    <script src="https://cdn.jsdelivr.net/npm/lunar-javascript/lunar.min.js"></script>
+    <style>
+        .calendar-floating{position:fixed;width:550px;max-width:90vw;background:#fff;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,.1);padding:16px;z-index:1000;left:50%;top:50%;transform:translate(-50%,-50%)}
+        .calendar-hidden{display:none}
+        .calendar-backdrop{position:fixed;left:0;top:0;width:100vw;height:100vh;background:transparent;z-index:999}
+        .calendar-trigger{position:fixed;top:16px;right:16px;background:#fff;border:1px solid #dadce0;border-radius:8px;padding:6px 10px;font-size:12px;color:#333;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.06);z-index:2000}
+        .calendar-trigger:hover{background:#f8f9fa}
+        .calendar-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+        .calendar-controls{display:flex;align-items:center;gap:8px}
+        .calendar-weekdays{display:grid;grid-template-columns:repeat(7,1fr);text-align:center;color:#70757a;font-size:12px;margin-bottom:8px}
+        .calendar-weekdays div:nth-child(6),.calendar-weekdays div:nth-child(7){color:#d93025}
+        .calendar-days{display:grid;grid-template-columns:repeat(7,1fr);grid-auto-rows:70px;gap:2px}
+        .calendar-day{display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:8px;position:relative;cursor:pointer;border:2px solid transparent}
+        .calendar-day:hover{border-color: #4e6ef2;}
+        .solar-date{font-size:18px;font-weight:500;margin-bottom:4px}
+        .lunar-date{font-size:12px;color:#70757a}
+        .current-month{color:#333;width: 70px;}
+        .other-month{color:#ccc}
+        .other-month .lunar-date{color:#ccc}
+        .weekend.current-month .solar-date,.weekend.current-month .lunar-date{color:#d93025}
+        .selected{border-color:#4e6ef2;background:#fff;box-shadow:0 2px 6px rgba(45,122,254,.2)}
+        .lunar-special{color:#333 !important}
+        .festival{color:#4e6ef2 !important;width: 70px;text-align: center;overflow: hidden;text-overflow: ellipsis; white-space: nowrap; }
+        .badge{position:absolute;top:4px;right:4px;font-size:10px;color:#fff;width:16px;height:16px;border-radius:4px;display:flex;align-items:center;justify-content:center}
+        .badge.rest{background:#ea4335}
+        .badge.work{background:#3c4043}
+        .holiday-bg{background:#fff0f0}
+        .calendar-arrow{border:none;background:transparent;font-size:18px;color:#5f6368;padding:0 6px;border-radius:50%}
+        .calendar-arrow:hover{background:#f1f3f4}
+        .calendar-today{padding:4px 10px;border:1px solid #dadce0;border-radius:6px;background:#fff;font-size:12px;cursor:pointer}
+        .today-cell{background:#e8f0fe}
+        .calendar-weekinfo{font-size:16px;color:#5f6368}
+        #state{display:flex;flex-direction:column;align-items:center;justify-content:center}
+        .clock-time{color:#fff;font-size:90px;line-height:1;font-weight:1;text-align:center}
+        .clock-date{padding-top: 5px; font-size:14px;color:#fff;text-align:center;cursor:pointer;margin-top:6px;text-decoration: none;}
+        .holiday-bg {
+            background-color: #fff0f0;
+        }
+        .calendar-month-name{
+            display: block;
+            margin-block-start: 0.6em;
+            margin-block-end: 0.5em;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+            font-weight: bold;
+            unicode-bidi: isolate;
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-size: 240px;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            color: #333;
+            opacity: 0.1;
+        }
+    </style>
 </head>
 
 <body>
@@ -50,8 +107,9 @@
             <div class="search-box">
                 <!-- logo -->
                 <div id="logo">
-                    <div id="state">
-                        <a href="folder://"><img id="img" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjEyMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48L3N2Zz4=" /></a>
+                    <div id="state" style="height: 121px;">
+                        <div id="clock-time" class="clock-time"></div>
+                        <div id="clock-date" class="clock-date"></div>
                     </div>
                 </div>
 
@@ -117,6 +175,246 @@
                 slideout.close();
             }
         });
+    </script>
+    <!-- <button id="calendar-trigger" class="calendar-trigger"></button> -->
+
+    <div id="calendar-backdrop" class="calendar-backdrop calendar-hidden"></div>
+    <div id="calendar-floating" class="calendar-floating calendar-hidden">
+        <h3 id="cal-month-name" class="calendar-month-name"></h3>
+        <div class="calendar-header">
+            <div class="calendar-controls">
+                <select id="cal-year"></select>
+                <button class="calendar-arrow" id="cal-prev">&lt;</button>
+                <select id="cal-month"></select>
+                <button class="calendar-arrow" id="cal-next">&gt;</button>
+            </div>
+            <div id="cal-weekno" class="calendar-weekinfo"></div>
+            <button class="calendar-today" id="cal-today">今天</button>
+        </div>
+        <div class="calendar-weekdays">
+            <div>一</div>
+            <div>二</div>
+            <div>三</div>
+            <div>四</div>
+            <div>五</div>
+            <div>六</div>
+            <div>日</div>
+        </div>
+        <div class="calendar-days" id="cal-grid"></div>
+    </div>
+
+    <script src="js/calendar-config.js"></script>
+    <script>
+        (function(){
+            
+            var now=new Date();
+            var currentYear=now.getFullYear();
+            var currentMonth=now.getMonth()+1;
+            var selectedDate=null;
+            var specialWorkDays=Array.isArray(window.specialWorkDays)?window.specialWorkDays:[];
+            var specialHolidays=Array.isArray(window.specialHolidays)?window.specialHolidays:[];
+            var grid=document.getElementById('cal-grid');
+            var yearSel=document.getElementById('cal-year');
+            var monthSel=document.getElementById('cal-month');
+            var calWeekEl=document.getElementById('cal-weekno');
+            function getISOWeekNumber(dt){
+                var date=new Date(Date.UTC(dt.getFullYear(),dt.getMonth(),dt.getDate()));
+                var dayNum=date.getUTCDay()||7;
+                date.setUTCDate(date.getUTCDate()+4-dayNum);
+                var yearStart=new Date(Date.UTC(date.getUTCFullYear(),0,1));
+                return Math.ceil(((date-yearStart)/86400000+1)/7);
+            }
+            function updateCalWeekInfoByDate(y,m,d){
+                var dt=new Date(y,m-1,d);
+                var w=getISOWeekNumber(dt);
+                if(calWeekEl){calWeekEl.textContent='第'+w+'周'}
+            }
+            function init(){
+                populate();
+                document.getElementById('cal-prev').addEventListener('click',function(){changeMonth(-1)});
+                document.getElementById('cal-next').addEventListener('click',function(){changeMonth(1)});
+                document.getElementById('cal-today').addEventListener('click',goToday);
+                yearSel.addEventListener('change',function(e){currentYear=parseInt(e.target.value);render()});
+                monthSel.addEventListener('change',function(e){currentMonth=parseInt(e.target.value);render()});
+                render();
+            }
+            function populate(){
+                var nowYear=new Date().getFullYear();
+                for(var i=nowYear-10;i<=nowYear+10;i++){
+                    var opt=document.createElement('option');
+                    opt.value=i;opt.innerText=i+'年';if(i===currentYear)opt.selected=true;yearSel.appendChild(opt);
+                }
+                for(var j=1;j<=12;j++){
+                    var optm=document.createElement('option');
+                    optm.value=j;optm.innerText=j+'月';if(j===currentMonth)optm.selected=true;monthSel.appendChild(optm);
+                }
+            }
+            function changeMonth(offset){
+                var nm=currentMonth+offset;
+                if(nm>12){nm=1;currentYear++}else if(nm<1){nm=12;currentYear--}
+                currentMonth=nm;updateControls();render();
+            }
+            function goToday(){
+                var t=new Date();
+                currentYear=t.getFullYear();
+                currentMonth=t.getMonth()+1;
+                selectedDate=currentYear+'-'+currentMonth+'-'+t.getDate();
+                updateControls();
+                render();
+            }
+            function updateControls(){
+                yearSel.value=currentYear;
+                monthSel.value=currentMonth;
+            }
+            function render(){
+                
+                grid.innerHTML='';
+                var firstDayObj=new Date(currentYear,currentMonth-1,1);
+                var dayOfWeek=firstDayObj.getDay();
+                var startIndex=dayOfWeek===0?6:dayOfWeek-1;
+                var prevMonthLastDay=new Date(currentYear,currentMonth-1,0).getDate();
+                var currentMonthLastDay=new Date(currentYear,currentMonth,0).getDate();
+                var totalCells=42;
+                var today=new Date();
+                var todayY=today.getFullYear();
+                var todayM=today.getMonth()+1;
+                var todayD=today.getDate();
+                document.getElementById('cal-month-name').textContent=currentMonth;
+                function isHoliday(y,m,d){return specialHolidays.indexOf(y+'-'+m+'-'+d)>=0}
+                function isWorkDay(y,m,d){return specialWorkDays.indexOf(y+'-'+m+'-'+d)>=0}
+                for(var i=0;i<totalCells;i++){
+                    var cell=document.createElement('div');
+                    cell.className='calendar-day';
+                    var ry=currentYear,rm=currentMonth,rd=0,type='';
+                    if(i<startIndex){type='other-month';rd=prevMonthLastDay-(startIndex-1-i);if(rm===1){rm=12;ry--}else{rm--}}
+                    else if(i>=startIndex+currentMonthLastDay){type='other-month';rd=i-(startIndex+currentMonthLastDay)+1;if(rm===12){rm=1;ry++}else{rm++}}
+                    else{type='current-month';rd=i-startIndex+1}
+                    var solar=Solar.fromYmd(ry,rm,rd);
+                    var lunar=solar.getLunar();
+                    var lunarText=lunar.getDayInChinese();
+                    var lunarClass='lunar-date';
+                    var jieQi=lunar.getJieQi();
+                    if(jieQi){lunarText=jieQi;if(type==='current-month')lunarClass+=' lunar-special'}
+                    var solarFestivals=solar.getFestivals();
+                    var lunarFestivals=lunar.getFestivals();
+                    var otherFestivals=[];//solar.getOtherFestivals();
+                    if(solarFestivals.length>0){lunarText=solarFestivals[0];lunarClass+=' festival'}else if(lunarFestivals.length>0){lunarText=lunarFestivals[0];lunarClass+=' festival'} 
+                    var colIndex=i%7; if(colIndex===5||colIndex===6){cell.classList.add('weekend')}
+                    cell.classList.add(type);
+                    if(type==='current-month'&&ry===todayY&&rm===todayM&&rd===todayD){cell.classList.add('today-cell')}
+                    if(type==='current-month'&&isHoliday(ry,rm,rd)){cell.classList.add('holiday-bg')}
+                    var selectedArr=selectedDate?selectedDate.split('-'):[];
+                    if(selectedArr.length===3&&parseInt(selectedArr[0])===ry&&parseInt(selectedArr[1])===rm&&parseInt(selectedArr[2])===rd){cell.classList.add('selected')}
+                    var html='<span class="solar-date">'+rd+'</span><span class="'+lunarClass+'">'+lunarText+'</span>';
+                    if(isHoliday(ry,rm,rd)){html+='<span class="badge rest">休</span>';cell.classList.add('holiday-bg')}
+                    else if(isWorkDay(ry,rm,rd)){html+='<span class="badge work">班</span>'}
+                    cell.innerHTML=html;
+                    (function(y,m,d,t){
+                        cell.addEventListener('click',function(){
+                            selectedDate=y+'-'+m+'-'+d;
+                            if(t==='other-month'){currentYear=y;currentMonth=m;updateControls()}
+                            render();
+                            updateCalWeekInfoByDate(y,m,d);
+                        });
+                    })(ry,rm,rd,type);
+                    grid.appendChild(cell);
+                }
+                if(selectedDate){
+                    var sa=selectedDate.split('-');
+                    updateCalWeekInfoByDate(parseInt(sa[0]),parseInt(sa[1]),parseInt(sa[2]));
+                }else{
+                    updateCalWeekInfoByDate(todayY,todayM,todayD);
+                }
+            }
+            init();
+        })();
+    </script>
+    <script>
+        (function(){
+            var trigger=document.getElementById('clock-date');
+            var calendarEl=document.getElementById('calendar-floating');
+            var backdropEl=document.getElementById('calendar-backdrop');
+            var weekNoEl=document.getElementById('cal-weekno');
+            function getISOWeekNumber(dt){
+                var date=new Date(Date.UTC(dt.getFullYear(),dt.getMonth(),dt.getDate()));
+                var dayNum=date.getUTCDay()||7;
+                date.setUTCDate(date.getUTCDate()+4-dayNum);
+                var yearStart=new Date(Date.UTC(date.getUTCFullYear(),0,1));
+                return Math.ceil(((date-yearStart)/86400000+1)/7);
+            }
+            function openCalendar(){
+                if(backdropEl) backdropEl.classList.remove('calendar-hidden');
+                calendarEl.classList.remove('calendar-hidden');
+            }
+            function closeCalendar(){
+                if(backdropEl) backdropEl.classList.add('calendar-hidden');
+                calendarEl.classList.add('calendar-hidden');
+            }
+            function updateWeekInfoByDate(y,m,d){
+                var dt=new Date(y,m-1,d);
+                var w=getISOWeekNumber(dt);
+                if(weekNoEl){weekNoEl.textContent='第'+w+'周'}
+            }
+            function build(){
+                var d=new Date();
+                var y=d.getFullYear();
+                var m=d.getMonth()+1;
+                var day=d.getDate();
+                var weekNames=['周日','周一','周二','周三','周四','周五','周六'];
+                var w=weekNames[d.getDay()];
+                var weekNo=getISOWeekNumber(d);
+                // var baseText=y+'-'+String(m).padStart(2,'0')+'-'+String(day).padStart(2,'0')+' '+w+' 第'+weekNo+'周';
+                // var finalText=baseText;
+                // if(window.Solar){
+                //     try{
+                //         var solar=Solar.fromYmd(y,m,day);
+                //         var lunar=solar.getLunar();
+                //         var lunarText=' '+lunar.getMonthInChinese()+'月'+lunar.getDayInChinese();
+                //         var extra='';
+                //         var sf=solar.getFestivals();
+                //         if(sf.length>0){extra=' '+sf[0]}else{var jq=lunar.getJieQi(); if(jq){extra=' '+jq}}
+                //         finalText=baseText+lunarText+extra;
+                //     }catch(e){finalText=baseText}
+                // }
+                // if(trigger){trigger.innerText=finalText;}
+                var clockTime=document.getElementById('clock-time');
+                var clockDate=document.getElementById('clock-date');
+                if(clockTime){
+                    var hh=String(d.getHours()).padStart(2,'0');
+                    var mm=String(d.getMinutes()).padStart(2,'0');
+                    clockTime.textContent=hh+':'+mm;
+                }
+                if(clockDate){
+                    var dateText=m+'月'+day+'日 '+w;
+                    if(window.Solar){
+                        try{
+                            var solar2=Solar.fromYmd(y,m,day);
+                            var lunar2=solar2.getLunar();
+                            dateText+=' '+lunar2.getMonthInChinese()+'月'+lunar2.getDayInChinese();
+                        }catch(e){}
+                    }
+                    clockDate.textContent=dateText;
+                }
+            }
+            build();
+            setInterval(build,30000);
+            function updateClockTime(){
+                var d=new Date();
+                var hh=String(d.getHours()).padStart(2,'0');
+                var mm=String(d.getMinutes()).padStart(2,'0');
+                var el=document.getElementById('clock-time');
+                if(el){el.textContent=hh+':'+mm;}
+            }
+            updateClockTime();
+            setInterval(updateClockTime,1000);
+            trigger.addEventListener('click',function(){
+                if(calendarEl.classList.contains('calendar-hidden')) openCalendar(); else closeCalendar();
+            });
+            if(backdropEl){
+                backdropEl.addEventListener('click',closeCalendar);
+            }
+            calendarEl.addEventListener('click',function(e){e.stopPropagation()});
+        })();
     </script>
 
 </body>
