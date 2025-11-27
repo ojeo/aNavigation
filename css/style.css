@@ -19,37 +19,68 @@ ul {
     display: inline-block;
     width: 100%;
     margin: 0 auto;
-    margin: 0!important;
+    margin: 0 !important;
 }
 
 
 /*媒体查询*/
 
 @media (max-width: 768px) {
+    .festival{
+        max-width: 40px;
+    }
+    .calendar-day{
+        max-width: 40px;
+    }
+    .clock-time {
+        color: #000;
+    }
+
+    .clock-date {
+        color: #000;
+    }
     /*小屏*/
     #main {
         background: url(../img/bg-xs.jpg) no-repeat;
         background-attachment: fixed;
         background-size: cover;
     }
+
     .search-box {
         margin: 0;
     }
+
     .inputDiv {
         margin: 30px 20px 0;
     }
 }
 
 @media (min-width: 768px) {
+    .festival{
+        max-width: 70px;
+    }
+    .calendar-day{
+        max-width: 70px;
+    }
+    .clock-time {
+        color: #fff;
+    }
+
+    .clock-date {
+        color: #fff;
+    }
+
     /*大屏*/
     #main {
         background: url(../img/bg.jpg) no-repeat;
         background-attachment: fixed;
         background-size: cover;
     }
+
     .search-box {
         margin: 20px 70px 0 70px;
     }
+
     .inputDiv {
         margin: 30px 130px 0;
     }
@@ -272,7 +303,7 @@ ul {
 .folder-item-img:hover,
 .folder-item-img2:hover {
     transform: translate3d(0, -3px, 0);
-    box-shadow: rgba(33, 33, 33, 0.75) 0 14px 12px -7px!important;
+    box-shadow: rgba(33, 33, 33, 0.75) 0 14px 12px -7px !important;
 }
 
 .folder-item-box p {
@@ -301,7 +332,7 @@ ul {
 /*侧边栏内容*/
 
 blockquote {
-    margin: 0!important;
+    margin: 0 !important;
     font-weight: bold;
     color: black;
 }
@@ -352,25 +383,31 @@ blockquote {
     0% {
         opacity: 0;
     }
+
     /*初始状态 透明度为0*/
     40% {
         opacity: 0;
     }
+
     /*过渡状态 透明度为0*/
     100% {
         opacity: 1;
     }
+
     /*结束状态 透明度为1*/
 }
 
 @-webkit-keyframes fade-in {
+
     /*针对webkit内核*/
     0% {
         opacity: 0;
     }
+
     40% {
         opacity: 0;
     }
+
     100% {
         opacity: 1;
     }
