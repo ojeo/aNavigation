@@ -183,7 +183,7 @@
         <h3 id="cal-month-name" class="calendar-month-name"></h3>
         <div class="calendar-header">
             <div class="calendar-controls">
-                <select id="cal-year"></select>
+                <select id="cal-year" class="form-select" ></select>
                 <button class="calendar-arrow" id="cal-prev">&lt;</button>
                 <select id="cal-month"></select>
                 <button class="calendar-arrow" id="cal-next">&gt;</button>
@@ -240,7 +240,7 @@
             }
             function populate(){
                 var nowYear=new Date().getFullYear();
-                for(var i=nowYear-10;i<=nowYear+10;i++){
+                for(var i=nowYear-50;i<=nowYear+50;i++){
                     var opt=document.createElement('option');
                     opt.value=i;opt.innerText=i+'年';if(i===currentYear)opt.selected=true;yearSel.appendChild(opt);
                 }
@@ -292,6 +292,7 @@
                     var solar=Solar.fromYmd(ry,rm,rd);
                     var lunar=solar.getLunar();
                     var lunarText=lunar.getDayInChinese();
+                    if(lunar.getDay()==1){lunarText=lunar.getMonthInChinese()+'月'}
                     var lunarClass='lunar-date';
                     var jieQi=lunar.getJieQi();
                     if(jieQi){lunarText=jieQi;if(type==='current-month')lunarClass+=' lunar-special'}

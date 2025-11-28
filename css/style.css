@@ -26,12 +26,14 @@ ul {
 /*媒体查询*/
 
 @media (max-width: 768px) {
-    .festival{
+    .festival {
         max-width: 40px;
     }
-    .calendar-day{
+
+    .calendar-day {
         max-width: 40px;
     }
+
     .clock-time {
         color: #000;
     }
@@ -39,6 +41,7 @@ ul {
     .clock-date {
         color: #000;
     }
+
     /*小屏*/
     #main {
         background: url(../img/bg-xs.jpg) no-repeat;
@@ -56,12 +59,14 @@ ul {
 }
 
 @media (min-width: 768px) {
-    .festival{
+    .festival {
         max-width: 70px;
     }
-    .calendar-day{
+
+    .calendar-day {
         max-width: 70px;
     }
+
     .clock-time {
         color: #fff;
     }
@@ -191,8 +196,20 @@ ul {
     cursor: pointer;
     width: 50%;
     font-size: 16px;
+
 }
 
+select {
+    border: 0;
+    background: transparent;
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+}
+
+select:focus {
+    outline: none;
+}
 
 /*搜索框*/
 
